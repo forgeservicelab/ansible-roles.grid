@@ -16,7 +16,7 @@
   shell: "git config --global {{ item.key }} {{ item.value }}"
   with_items:
     - { key: user.name, value: "{{ inventory_hostname }}" }
-    - { key: user.email, value: "{{ inventory_hostname }}@"{{ jenkins_user }}".forgeservicelab.fi" }
+    - { key: user.email, value: "{{ inventory_hostname }}@{{ jenkins_user }}.forgeservicelab.fi" }
 
 # We upload Jenkins' private key instead of
 # generating a new one to avoid having to upload
