@@ -8,6 +8,7 @@
     - git=1:1.9.1-1
     - python-dev
     - python-pip
+    - php-codesniffer
     - xvfb
     - firefox=28.0+build2-0ubuntu2
     - openjdk-7-jdk
@@ -39,6 +40,13 @@
     - robotframework-selenium2library
     - robotframework-pabot
     - ansible
+
+- name: Upload Drupal Code Standard
+  unarchive:
+    src: drupal.tar.gz
+    dest: /usr/share/php/PHP/CodeSniffer/Standards/
+    owner: root
+    group: root
 
 - name: Fix bug on ansible-vault
   replace:
