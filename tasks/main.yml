@@ -11,6 +11,7 @@
     - xvfb
     - firefox=28.0+build2-0ubuntu2
     - openjdk-7-jdk
+    - ant
 
 - name: Set git credentials
   shell: "git config --global {{ item.key }} {{ item.value }}"
