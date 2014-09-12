@@ -1,0 +1,35 @@
+Host PlazaDevelJumpHost
+  HostName 193.166.24.150
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ci
+
+Host 192.168.128.1??
+  ProxyCommand ssh -q PlazaDevelJumpHost nc -q0 %h %p
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ci
+
+Host PlazaTestingJumpHost
+  HostName 193.166.24.155
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ci
+
+Host 192.168.128.1?
+  ProxyCommand ssh -q PlazaTestingJumpHost nc -q0 %h %p
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ci
+
+Host PlazaProductionJumpHost
+  HostName 193.166.24.185
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ci
+
+Host 192.168.2.2?
+  ProxyCommand ssh -q PlazaProductionJumpHost nc -q0 %h %p
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  User ci

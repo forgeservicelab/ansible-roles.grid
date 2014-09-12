@@ -1,0 +1,22 @@
+{
+  "capabilities":
+      [
+        {
+          "platform": "LINUX",
+          "browserName": "firefox",
+          "maxInstances": 1,
+          "seleniumProtocol": "WebDriver"
+        },
+      ],
+  "configuration":
+  {
+    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+    "maxSession": 1,
+    "port": 5555,
+    "host": {{ ansible_ssh_host }},
+    "register": true,
+    "registerCycle": 5000,
+    "hubPort": 4444,
+    "hubHost": ci.forgeservicelab.fi
+  }
+}

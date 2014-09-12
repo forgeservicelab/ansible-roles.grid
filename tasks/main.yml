@@ -1,0 +1,85 @@
+---
+# tasks file for grid
+- name: Install required packages
+  apt:
+    update_cache: yes
+    pkg: "{{ item }}"
+  with_items:
+    - git=1:1.9.1-1
+    - python-dev
+    - python-pip
+    - xvfb
+    - firefox=28.0+build2-0ubuntu2
+    - openjdk-7-jdk
+
+- name: Set git credentials
+  shell: "git config --global {{ item.key }} {{ item.value }}"
+  with_items:
+    - { key: user.name, value: "{{ inventory_hostname }}" }
+    - { key: user.email, value: "{{ inventory_hostname }}@"{{ jenkins_user }}".forgeservicelab.fi" }
+
+# We upload Jenkins' private key instead of
+# generating a new one to avoid having to upload
+# a new key to all nodes accessed by Jenkins
+- name: Upload Jenkins private key and configuration
+  copy:
+    src: "{{ item }}"
+    dest: ~/.ssh/
+    mode: 0600
+  sudo_user: "{{ jenkins_user }}"
+  with_items:
+    - id_dsa
+    - config
+
+- name: Install python packages
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - robotframework-selenium2library
+    - robotframework-pabot
+    - ansible
+
+- name: Fix bug on ansible-vault
+  replace:
+    dest: /usr/local/bin/ansible-vault
+    regexp: vault_password_file
+    replace: password_file
+
+- name: Tweak hosts file to make selenium bind to all interfaces
+  lineinfile:
+    dest: /etc/hosts
+    insertafter: EOF
+    line: "0.0.0.0	{{ inventory_hostname }}.forgeservicelab.fi"
+
+- name: Create Jenkins' work directory
+  file:
+    path: /var/lib/jenkins
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+    state: directory
+
+- name: Upload selenium node configuration
+  template:
+    src: DefaultNode.json.j2
+    dest: /var/lib/jenkins/node.json
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+
+- name: Upload server private key
+  copy:
+    src: forgeservicelab.fi.key
+    dest: /var/lib/
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_user }}"
+
+- name: Upload Xvfb startup script
+  copy:
+    src: xvfb
+    dest: /etc/init.d/xvfb
+    mode: 0755
+
+- name: Ensure Xvfb is started
+  service:
+    name: xvfb
+    state: started
+    enabled: yes
