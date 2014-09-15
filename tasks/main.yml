@@ -14,8 +14,15 @@
     - openjdk-7-jdk
     - ant
 
+- name: upgrade CodeSniffer to latest stable
+  shell: pear install PHP_CodeSniffer-stable
+  register: output
+  failed_when: output.rc != 0 and "is already installed" not in output.stdout
+  changed_when: output.rc == 0
+
 - name: Set git credentials
   shell: "git config --global {{ item.key }} {{ item.value }}"
+  sudo_user: "{{ jenkins_user }}"
   with_items:
     - { key: user.name, value: "{{ inventory_hostname }}" }
     - { key: user.email, value: "{{ inventory_hostname }}@{{ jenkins_user }}.forgeservicelab.fi" }
