@@ -8,6 +8,8 @@
     - git=1:1.9.1-1
     - python-dev
     - python-pip
+    - libxml2-dev
+    - libxslt1-dev
     - php-codesniffer
     - xvfb
     - firefox=28.0+build2-0ubuntu2
@@ -46,6 +48,8 @@
   with_items:
     - robotframework-selenium2library
     - robotframework-pabot
+    - python-novaclient
+    - python-neutronclient
     - ansible
 
 - name: Upload Drupal Code Standard
