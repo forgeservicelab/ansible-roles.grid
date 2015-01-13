@@ -48,6 +48,8 @@
   with_items:
     - robotframework-selenium2library
     - robotframework-pabot
+    - httplib2.system_ca_certs_locater
+    - oslo.config
     - python-novaclient
     - python-neutronclient
     - ansible
