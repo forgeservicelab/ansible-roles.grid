@@ -61,12 +61,6 @@
     owner: root
     group: root
 
-- name: Fix bug on ansible-vault
-  replace:
-    dest: /usr/local/bin/ansible-vault
-    regexp: vault_password_file
-    replace: password_file
-
 - name: Tweak hosts file to make selenium bind to all interfaces
   lineinfile:
     dest: /etc/hosts
