@@ -29,18 +29,12 @@
     - { key: user.name, value: "{{ inventory_hostname }}" }
     - { key: user.email, value: "{{ inventory_hostname }}@{{ jenkins_user }}.forgeservicelab.fi" }
 
-# We upload Jenkins' private key instead of
-# generating a new one to avoid having to upload
-# a new key to all nodes accessed by Jenkins
-- name: Upload Jenkins private key and configuration
+- name: Upload Jenkins SSH agent auto-start config
   copy:
-    src: "{{ item }}"
-    dest: ~/.ssh/
-    mode: 0600
+    src: bash_profile
+    dest: ~/.bash_profile
+    mode: 0644
   sudo_user: "{{ jenkins_user }}"
-  with_items:
-    - id_dsa
-    - config
 
 - name: Install python packages
   pip:
