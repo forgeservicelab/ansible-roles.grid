@@ -36,6 +36,13 @@
     mode: 0644
   sudo_user: "{{ jenkins_user }}"
 
+- name: Upload Jenkins private key and configuration
+  copy:
+    src: id_dsa
+    dest: ~/.ssh/
+    mode: 0600
+  sudo_user: "{{ jenkins_user }}"
+
 - name: Install python packages
   pip:
     name: "{{ item }}"
