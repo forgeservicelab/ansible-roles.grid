@@ -50,6 +50,7 @@
   with_items:
     - robotframework-selenium2library
     - robotframework-pabot
+    - robotframework-sshlibrary
     - httplib2.system_ca_certs_locater
     - oslo.config
     - python-novaclient
