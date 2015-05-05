@@ -16,6 +16,7 @@
     - firefox=28.0+build2-0ubuntu2
     - openjdk-7-jdk
     - ant
+    - haveged
 
 - name: upgrade CodeSniffer to latest stable
   shell: pear install PHP_CodeSniffer-stable
